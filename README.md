@@ -2,7 +2,7 @@
  
 Plugin for [Hyper](https://hyper.is/) terminal animating rocket launching on successful `git push` execution.
 
-![](space-push.gif)
+![Alt Text](https://github.com/dididy/space-push/raw/master/space-push.gif)
 
 ## Getting the plugin 
 
