@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import Spaceship from './Spaceship'
+import { SpaceshipTakeoff } from './Spaceship'
 
 
-const detectGitPull = (data) => {
+const detectGitPush = (data) => {
   const patterns = 
-  ['^Updating {0,}([a-z0-9A-Z]+\.{2,3}[a-z0-9A-Z]+)|(\[[a-z0-9A-Z]+\.{2,3}[a-z0-9A-Z]+\])$', '^Unpacking objects']
+  ['To .+.git', 'Everything up+',]
   const antiPattern = /CONFLICT/
   
   return new RegExp(`(${patterns.join(')|(')})`).test(data) && !antiPattern.test(data)
@@ -14,9 +14,9 @@ export const middleware = (store) => (next) => (action) => {
   if ('SESSION_ADD_DATA' === action.type) {
     const { data } = action;
 
-    if (detectGitPull(data)) {
+    if (detectGitPush(data)) {
       store.dispatch({
-        type: 'TOGGLE_PULL_ROCKET'
+        type: 'TOGGLE_PUSH_ROCKET'
       })
     }
 
@@ -28,11 +28,11 @@ export const middleware = (store) => (next) => (action) => {
 
 export function reduceUI(state, action) {
   switch (action.type) {
-    case 'TOGGLE_PULL_ROCKET': {
-      if (state.pullRocket === undefined ) {
-        return state.set('pullRocket', 1)
+    case 'TOGGLE_PUSH_ROCKET': {
+      if (state.pushRocket === undefined ) {
+        return state.set('pushRocket', 1)
       } else {
-        return state.set('pullRocket', state.pullRocket + 1)
+        return state.set('pushRocket', state.pushRocket + 1)
       }
     }
   }
@@ -41,14 +41,14 @@ export function reduceUI(state, action) {
 
 export function mapTermsState(state, map) {
   return Object.assign(map, {
-    pullRocket: state.ui.pullRocket
+    pushRocket: state.ui.pushRocket
   })
 }
 
 
 const passProps = (uid, parentProps, props) => {
   return Object.assign(props, {
-    pullRocket: parentProps.pullRocket
+    pushRocket: parentProps.pushRocket
   })
 }
 
@@ -60,7 +60,7 @@ export function decorateTerm(Term) {
     constructor (props, context) {
       super(props,context)
       this.state = {
-        displayPullRocket: false
+        displayPushRocket: false
       }
     }
 
@@ -71,17 +71,17 @@ export function decorateTerm(Term) {
     }
 
     componentWillReceiveProps(nextProps) {
-      if((nextProps.pullRocket > this.props.pullRocket) || (nextProps.pullRocket === 1 && this.props.pullRocket === undefined)) {
-        this.setState({displayPullRocket: true})
+      if((nextProps.pushRocket > this.props.pushRocket) || (nextProps.pushRocket === 1 && this.props.pushRocket === undefined)) {
+        this.setState({displayPushRocket: true})
       }
     }
 
     onAnimationEnd(event) {
       setTimeout(() => {
-          this.setState({
-          displayPullRocket: false
+        this.setState({
+          displayPushRocket: false
         })
-      }, 1500)
+      }, 15000)
     }
 
     render () {
@@ -90,7 +90,7 @@ export function decorateTerm(Term) {
           {React.createElement(Term, Object.assign({}, this.props, {
             onTerminal: this._onTerminal,
           }))}
-          <Spaceship display={this.state.displayPullRocket} onAnimationEnd={this.onAnimationEnd.bind(this)}/>
+          <SpaceshipTakeoff display={this.state.displayPushRocket} onAnimationEnd={this.onAnimationEnd.bind(this)}/>
       </div>
       )
     }
