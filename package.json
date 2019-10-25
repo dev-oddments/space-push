@@ -1,7 +1,7 @@
 {
-  "name": "space-pull",
-  "version": "1.0.13",
-  "description": "Spaceship that delivers your code to you on git pull.",
+  "name": "space-push",
+  "version": "0.0.1",
+  "description": "Spaceship that delivers your code to you on git push.",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,21 +9,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/lukaszromerowicz/space-pull.git"
+    "url": "git+ssh://git@github.com/dididy/space-push.git"
   },
   "keywords": [
     "hyper",
-    "space-pull",
+    "space-push",
     "hyperapp",
     "terminal",
-    "animated-pull"
+    "animated-push"
   ],
-  "author": "Lukasz Romerowicz",
+  "author": "dididy",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lukaszromerowicz/space-pull/issues"
+    "url": "https://github.com/dididy/space-push/issues"
   },
-  "homepage": "https://github.com/lukaszromerowicz/space-pull#readme",
+  "homepage": "https://github.com/dididy/space-push#readme",
   "dependencies": {
     "styled-components": "^2.1.0"
   },
